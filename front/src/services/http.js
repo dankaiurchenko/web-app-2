@@ -3,7 +3,7 @@ import store from '../store.js';
 
 const http = axios.create ({
     baseURL: 'http://localhost:8081/api/index.php',
-    timeout: 1000,
+    timeout: 2000,
     headers: {'Content-Type': 'application/json'},
 });
 

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/realized-courses")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class RealizedCourseController {
     @Autowired
     private RealizedCourseService realizedCourseService;

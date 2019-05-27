@@ -48,7 +48,7 @@
                 <v-text-field
                         v-model="newUser.password"
                         label="Password"
-                        v-validate="'required'"
+                        v-validate="'required|min:6'"
                         :data-vv-name="'password'"
                         :error-messages="errors.collect('password')"
                 ></v-text-field>
@@ -109,22 +109,25 @@
             login() {
                 let self = this;
                 if (this.username != "" && this.password != "") {
-                    http.post("/login", {
-                        name: "",
-                        surname: "",
+                    http.post("/auth/login", {
                         email: this.username,
-                        role: "",
                         password: this.password
                     }).then(function (response) {
                         self.successAutoClosable("you are logged in");
                         console.log(response.data);
+                        let user = {};
+                        user.role = response.data.authorities[0].authority;
+                        user.userId = response.data.userId;
+                        user.email = response.data.username;
                         self.$router.replace({name: "home"});
                         self.$store.commit('token', response.data.token);
-                        self.$store.commit('user', response.data);
+                        self.$store.commit('user', user);
                         self.$emit("authenticated", true);
                     }).catch(function (error) {
                         console.log(error);
+                        console.log(error.response);
                         self.errorAutoClosable("The username and / or password is incorrect");
+                        // self.errorAutoClosable(error.response.message);
                     });
                 }
             },
@@ -132,7 +135,7 @@
                 let self= this;
                 this.$validator.validateAll().then((result) => {
                     if (result) {
-                        http.post("/register", this.newUser).then(
+                        http.post("/auth/register", this.newUser).then(
                             function (response) {
                                 console.log(response.data);
                                 self.loginForm = true;
@@ -149,7 +152,7 @@
                             })
                             .catch(function (error) {
                                 console.log(error);
-                                self.errorAutoClosable("Something went wrong");
+                                self.errorAutoClosable(error);
                             });
                         return;
                     }

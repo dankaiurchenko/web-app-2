@@ -1,6 +1,7 @@
 package com.danarossa.webapp2.security.jwt;
 
 import com.danarossa.webapp2.security.services.UserDetailsServiceImpl;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Log4j2
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthTokenFilter.class);
     @Autowired
     private JwtProvider tokenProvider;
     @Autowired
@@ -28,8 +29,9 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
-
             String jwt = getJwt(request);
+            log.info(jwt);
+            log.info("trying to auth");
             if (jwt != null && tokenProvider.validateJwtToken(jwt)) {
                 String username = tokenProvider.getUserNameFromJwtToken(jwt);
 
@@ -41,19 +43,18 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
-            logger.error("Can NOT set user authentication -> Message: {}", e);
+            log.error("Can NOT set user authentication -> Message: {}", e);
         }
-
+        log.info("not  try to auth");
         filterChain.doFilter(request, response);
     }
 
     private String getJwt(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-
+        log.info("retrieved auth header  " + authHeader);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.replace("Bearer ", "");
         }
-
         return null;
     }
 }

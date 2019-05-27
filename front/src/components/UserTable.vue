@@ -8,11 +8,11 @@
                 style="width: 100%"
         >
             <template v-slot:items="props">
-                <tr class="cursor" v-on:click="$router.push('/users/' + props.item.id)">
+                <tr class="cursor" v-on:click="$router.push('/users/' + props.item.userId)">
                     <td class="text-xs-left">{{ props.item.name }}</td>
                     <td class="text-xs-right">{{ props.item.surname }}</td>
                     <td class="text-xs-right">{{ props.item.email }}</td>
-                    <td class="text-xs-right">{{ props.item.dateEntered }}</td>
+                    <td class="text-xs-right">{{ props.item.dateEntered.slice(0, 10) }}</td>
                 </tr>
             </template>
         </v-data-table>
@@ -29,7 +29,7 @@
                     {text: 'Name', align: 'left', value: 'name'},
                     {text: 'Surname', align: 'right', value: 'surname'},
                     {text: 'email', align: 'right', value: 'email'},
-                    {text: 'Mark', align: 'right', value: 'mark'},
+                    {text: 'Date entered', align: 'right', value: 'dateEntered'},
                 ]
             }
         }

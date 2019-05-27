@@ -6,7 +6,8 @@
                 <span class="font-weight-medium">{{course.title}}</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items v-if="$store.state.user.role == 'ADMIN' || $store.state.user.id == course.lecturerId">
+            <v-toolbar-items v-if="$store.state.user.role == 'ADMIN' ||
+             $store.state.user.userId == course.lecturerId">
                 <v-btn v-if="canJoin()" color="success" v-on:click="joinCourse()">Join</v-btn>
                 <v-btn flat icon v-on:click="editRealizedCourse()">
                     <v-icon>edit</v-icon>
@@ -19,14 +20,14 @@
                     <v-list-tile-content>
                         <v-list-tile-title><span class="grey--text">Start Date :</span> <span
                                 class="font-weight-medium" v-if="realizedCourse.startDate != undefined">
-                            {{realizedCourse.startDate.slice(0, 12)}}</span></v-list-tile-title>
+                            {{realizedCourse.startDate.slice(0, 10)}}</span></v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile class="wid">
                     <v-list-tile-content>
                         <v-list-tile-title><span class="grey--text">Exam Date :</span> <span
                                 class="font-weight-medium" v-if="realizedCourse.examDate != undefined">
-                            {{realizedCourse.examDate.slice(0, 12)}}</span></v-list-tile-title>
+                            {{realizedCourse.examDate.slice(0, 10)}}</span></v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
 
@@ -113,7 +114,7 @@
             canJoin() {
                 return this.$store.state.user.role == 'STUDENT' &&
                     this.users.filter(function (e) {
-                        return e.studentent.id == this.$store.state.user.id
+                        return e.studentent.userId == this.$store.state.user.userId
                     }).length == 0;
             },
             joinCourse() {
@@ -121,7 +122,7 @@
                 http.put('/marks/join',
                     {
                         id: 0,
-                        studentId: this.$store.state.user.id,
+                        studentId: this.$store.state.user.userId,
                         realizedCourseId: this.$route.params.id,
                         mark: 0
                     }).then(function (response) {

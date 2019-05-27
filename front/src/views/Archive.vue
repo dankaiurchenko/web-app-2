@@ -17,7 +17,7 @@
                             {{ props.item.trainerName }}
                         </td>
                         <td class="text-xs-right cursor" v-if="props.item.endDate != undefined">
-                            {{ props.item.endDate.slice(0, 12) }}
+                            {{ props.item.endDate.slice(0, 10) }}
                         </td>
                         <td class="text-xs-right cursor">
                             {{ props.item.mark }}
@@ -66,7 +66,7 @@
         },
         mounted() {
             let self = this;
-            http.get("/students/" + self.$store.state.user.id + "/marks")
+            http.get("/students/" + self.$store.state.user.userId + "/marks")
                 .then(function (response) {
                     self.marks = response.data;
                     console.log(response);

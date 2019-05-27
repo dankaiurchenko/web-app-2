@@ -8,11 +8,11 @@
                 style="width: 100%"
         >
             <template v-slot:items="props">
-                <tr v-on:click="goTo(props.item.id)">
-                    <td class="text-xs-right">{{ props.item.id }}</td>
-                    <td class="text-xs-right" v-if="props.item.startDate != undefined">{{ props.item.startDate.slice(0, 12) }}</td>
-                    <td class="text-xs-right" v-if="props.item.endDate != undefined">{{ props.item.endDate.slice(0, 12) }}</td>
-                    <td class="text-xs-right" v-if="props.item.examDate != undefined">{{ props.item.examDate.slice(0, 12) }}</td>
+                <tr v-on:click="goTo(props.item.realizedCourseId)">
+                    <td class="text-xs-right">{{ props.item.realizedCourseId }}</td>
+                    <td class="text-xs-right" v-if="props.item.startDate != undefined">{{ props.item.startDate.slice(0, 10) }}</td>
+                    <td class="text-xs-right" v-if="props.item.endDate != undefined">{{ props.item.endDate.slice(0, 10) }}</td>
+                    <td class="text-xs-right" v-if="props.item.examDate != undefined">{{ props.item.examDate.slice(0, 10) }}</td>
                     <td class="text-xs-right">{{ props.item.status }}</td>
                 </tr>
             </template>

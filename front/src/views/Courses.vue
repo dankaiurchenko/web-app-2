@@ -13,7 +13,7 @@
                     :headers="headers"
                     style="width: 100%">
                 <template v-slot:items="props">
-                    <tr class="cursor" v-on:click="goTo(props.item.id)">
+                    <tr class="cursor" v-on:click="goTo(props.item.courseId)">
                         <td class="text-xs-right">{{ props.item.title }}</td>
                         <td class="text-xs-right">{{ props.item.numberOfHours }}</td>
                         <td class="text-xs-right">{{ props.item.hoursForLectures }}</td>

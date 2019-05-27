@@ -38,7 +38,7 @@
                                 <v-list-tile-content>
                                     <v-list-tile-title><span class="grey--text">Date joined :</span>
                                         <span class="font-weight-medium" v-if="user.dateEntered != undefined">
-                                        {{user.dateEntered.slice(0, 12)}}
+                                        {{user.dateEntered.slice(0, 10)}}
                                         </span></v-list-tile-title>
                                 </v-list-tile-content>
                             </v-list-tile>
@@ -58,7 +58,7 @@
                                 <v-list-tile-content>
                                     <v-list-tile-title><span class="grey--text">Courses :</span>
                                         <span v-if="courses.length < 1">No courses yet</span>
-                                        <span v-else v-for="course in courses" v-on:click="goTo(course.id)"
+                                        <span v-else v-for="course in courses" v-on:click="goTo(course.courseId)"
                                               class="font-weight-medium cursor">{{course.title}}</span>
                                     </v-list-tile-title>
                                 </v-list-tile-content>
@@ -92,60 +92,68 @@
                 return value.name + ' ' + value.surname;
             },
             goToUserPage(value) {
-                this.$router.push('/users/' + value.id);
+                this.$router.push('/users/' + value.userId);
             },
             goTo(value) {
                 this.$router.push('/courses/' + value);
-            }
-        },
-        mounted() {
-            let self = this;
-            console.log(this.$store.state.user.role);
-            http.get('/users/' + this.$route.params.id)
-                .then(function (response) {
-                    self.user = response.data;
-                    console.log(response);
-                    if (self.user.role == 'ADMIN') {
-                    } else if (self.user.role == 'TRAINER') {
-                        http.get('/courses/get-by-lecturer',
-                            {
-                                params: {
-                                    trainerId: self.$route.params.id
-                                }
-                            }).then(function (response) {
-                            console.log(response);
-                            self.courses = response.data;
-                        }).catch(function (error) {
-                            console.log(error);
-                        });
-                        http.get('/trainers/' + self.$route.params.id + '/realized-courses')
-                            .then(function (response) {
-                                console.log(response);
-                                self.realized = response.data;
-                            }).catch(function (error) {
-                            console.log(error);
-                        });
-
-                    } else {
-                        http.get('/students/' + self.$route.params.id + '/courses')
-                            .then(function (response) {
+            },
+            loadInfo() {
+                let self = this;
+                console.log(this.$store.state.user.role);
+                http.get('/users/' + this.$route.params.id)
+                    .then(function (response) {
+                        self.user = response.data;
+                        console.log(response);
+                        if (self.user.role == 'ADMIN') {
+                        } else if (self.user.role == 'TRAINER') {
+                            http.get('/courses/get-by-lecturer',
+                                {
+                                    params: {
+                                        trainerId: self.$route.params.id
+                                    }
+                                }).then(function (response) {
                                 console.log(response);
                                 self.courses = response.data;
                             }).catch(function (error) {
-                            console.log(error);
-                        });
-                        http.get('/students/' + self.$route.params.id + '/realized-courses')
-                            .then(function (response) {
-                                console.log(response);
-                                self.realized = response.data;
-                            }).catch(function (error) {
-                            console.log(error);
-                        })
-                    }
-                }).catch(function (error) {
-                console.log(error);
-            });
+                                console.log(error);
+                            });
+                            http.get('/trainers/' + self.$route.params.id + '/realized-courses')
+                                .then(function (response) {
+                                    console.log(response);
+                                    self.realized = response.data;
+                                }).catch(function (error) {
+                                console.log(error);
+                            });
 
+                        } else {
+                            http.get('/students/' + self.$route.params.id + '/courses')
+                                .then(function (response) {
+                                    console.log(response);
+                                    self.courses = response.data;
+                                }).catch(function (error) {
+                                console.log(error);
+                            });
+                            http.get('/students/' + self.$route.params.id + '/realized-courses')
+                                .then(function (response) {
+                                    console.log(response);
+                                    self.realized = response.data;
+                                }).catch(function (error) {
+                                console.log(error);
+                            })
+                        }
+                    }).catch(function (error) {
+                    console.log(error);
+                });
+
+            }
+        },
+        mounted() {
+            this.loadInfo();
+        },
+        watch: {
+            '$route'() {
+                this.loadInfo();
+            }
         }
     }
 </script>

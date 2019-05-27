@@ -7,7 +7,7 @@
                 <span class="font-weight-medium">{{course.title}}</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items v-if="$store.state.user.role == 'ADMIN' || $store.state.user.id == course.lecturerId">
+            <v-toolbar-items v-if="$store.state.user.role == 'ADMIN' || $store.state.user.userId == course.lecturerId">
                 <v-btn flat icon v-on:click="editCourse()">
                     <v-icon>edit</v-icon>
                 </v-btn>

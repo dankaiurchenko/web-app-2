@@ -9,13 +9,13 @@
         >
             <template v-slot:items="props">
                 <tr>
-                    <td class="text-xs-left cursor" v-on:click="$router.push('/users/' + props.item.student.id)">
+                    <td class="text-xs-left cursor" v-on:click="$router.push('/users/' + props.item.student.userId)">
                         {{ props.item.student.name }}
                     </td>
-                    <td class="text-xs-right cursor" v-on:click="$router.push('/users/' + props.item.student.id)">
+                    <td class="text-xs-right cursor" v-on:click="$router.push('/users/' + props.item.student.userId)">
                         {{ props.item.student.surname }}
                     </td>
-                    <td class="text-xs-right cursor" v-on:click="$router.push('/users/' + props.item.student.id)">
+                    <td class="text-xs-right cursor" v-on:click="$router.push('/users/' + props.item.student.userId)">
                         {{ props.item.student.email }}
                     </td>
                     <td v-if="hasRights()" class="text-xs-right" style="width: 15%">
@@ -29,7 +29,7 @@
                                 style="margin-top: 15px; font-size: 13px"
                         ></v-select>
                     </td>
-                    <td v-else class="text-xs-right cursor" v-on:click="$router.push('/users/' + props.item.student.id)">
+                    <td v-else class="text-xs-right cursor" v-on:click="$router.push('/users/' + props.item.student.userId)">
                         {{ props.item.dtoMark.mark }}
                     </td>
 
@@ -79,7 +79,7 @@
                 });
             },
             hasRights(){
-                return this.$store.state.user.role == 'ADMIN' || this.$store.state.user.id == this.trainerId
+                return this.$store.state.user.role == 'ADMIN' || this.$store.state.user.userId == this.trainerId
             }
         },
         computed: {

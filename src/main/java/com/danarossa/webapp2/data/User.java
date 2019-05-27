@@ -1,12 +1,10 @@
 package com.danarossa.webapp2.data;
 
-import jdk.internal.jline.internal.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import java.sql.Timestamp;
 import java.util.Date;
 

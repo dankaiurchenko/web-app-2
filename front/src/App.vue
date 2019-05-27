@@ -70,6 +70,11 @@
             },
             logout() {
                 let self = this;
+                self.$store.commit('token', '');
+                self.$store.commit('user', null);
+                self.$store.commit('authenticated', false);
+                self.$router.push('/login');
+                self.successAutoClosable("you are logged out on front");
                 http.post("/logout", this.$store.state.user)
                     .then(function (response) {
                         console.log(response.data);
@@ -77,7 +82,7 @@
                         self.$store.commit('user', null);
                         self.$store.commit('authenticated', false);
                         self.$router.push('/login');
-                        self.successAutoClosable("you are logged out");
+                        self.successAutoClosable("you are logged out on back");
                     }).catch(function (error) {
                     console.log(error);
                     console.log("The username and / or password is incorrect");
@@ -100,7 +105,7 @@
                     {title: 'Archive', address: '/archive'}
                 ];
                 if (this.$store.state.user != null)
-                    a.push({title: 'My Page', address: '/users/' + this.$store.state.user.id});
+                    a.push({title: 'My Page', address: '/users/' + this.$store.state.user.userId});
                 return a
             }
         }
