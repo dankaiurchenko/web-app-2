@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
@@ -24,6 +25,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
             "  from student_lecturers_view where STUDENT_ID = ?1", nativeQuery = true)
     List<StudentWithMark> getAllLecturersForStudent(Integer studentId);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }
 

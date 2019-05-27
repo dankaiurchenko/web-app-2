@@ -22,8 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer add(User newUser) {
-        User userByEmail = userRepository.findByEmail(newUser.getEmail());
-        if (userByEmail == null) {
+        if (!userRepository.findByEmail(newUser.getEmail()).isPresent()) {
             userRepository.save(newUser);
             return newUser.getUserId();
         } else throw new ServiceException("User not found");

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Null;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @Entity
@@ -25,6 +26,12 @@ public class User {
     private Timestamp dateEntered;
     @Enumerated(EnumType.STRING)
     private Role role;
-//    private String token;
 
+    public User(String email, String password, String name, String surname) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.dateEntered = new Timestamp(new Date().getTime());
+    }
 }

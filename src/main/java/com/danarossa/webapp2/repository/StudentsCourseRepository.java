@@ -10,7 +10,6 @@ import java.util.Optional;
 @Repository
 public interface StudentsCourseRepository extends CrudRepository<StudentsCourse, Integer> {
 
-
     Optional<StudentsCourse> findByStudentIdAndRealizedCourseId(Integer studentId, Integer realizedCourseId);
 
     List<StudentsCourse> findByStudentId(Integer studentId);

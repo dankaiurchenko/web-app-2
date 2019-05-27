@@ -7,13 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends CrudRepository<Course, Integer> {
 
     @Query(value = "select a.* from courses a join realized_courses b using (course_id) where b.realized_course_id = ?1",
                 nativeQuery = true)
-    Course findByRealizedCourseId(Integer realizedCourseId);
+    Optional<Course> findByRealizedCourseId(Integer realizedCourseId);
 
     @Query(value = "select distinct sc.* \n" +
             "  from STUDENTS_COURSES sc \n" +
