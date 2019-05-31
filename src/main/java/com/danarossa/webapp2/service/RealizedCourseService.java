@@ -4,18 +4,17 @@ import com.danarossa.webapp2.data.RealizedCourse;
 import com.danarossa.webapp2.dto.StudentWithMark;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RealizedCourseService {
     Iterable<RealizedCourse> all();
 
-    Optional<RealizedCourse> byId(Integer realizedCourseId);
+    RealizedCourse byId(Integer realizedCourseId);
 
-    Integer createNew(RealizedCourse realizedCourse);
+    RealizedCourse createNew(RealizedCourse realizedCourse);
 
-    Integer edit(RealizedCourse realizedCourse);
+    RealizedCourse edit(RealizedCourse realizedCourse);
 
-    String delete(Integer realizedCourseId);
+    void delete(Integer realizedCourseId);
 
     List<StudentWithMark> allOfCourse(Integer realizedCourseId);
 }

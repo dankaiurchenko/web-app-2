@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,4 +33,5 @@ public class User {
         this.surname = surname;
         this.dateEntered = new Timestamp(new Date().getTime());
     }
+
 }

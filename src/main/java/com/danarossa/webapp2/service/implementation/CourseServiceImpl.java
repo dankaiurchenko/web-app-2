@@ -4,23 +4,19 @@ import com.danarossa.webapp2.data.Course;
 import com.danarossa.webapp2.data.RealizedCourse;
 import com.danarossa.webapp2.repository.CourseRepository;
 import com.danarossa.webapp2.repository.RealizedCourseRepository;
+import com.danarossa.webapp2.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements com.danarossa.webapp2.service.CourseService {
     @Autowired
-    public RealizedCourseRepository realizedCourseRepository;
+    private RealizedCourseRepository realizedCourseRepository;
     @Autowired
-    public CourseRepository courseRepository;
+    private CourseRepository courseRepository;
 
-    public CourseServiceImpl() {
-    }
 
     @Override
     public Iterable<Course> all() {
@@ -34,32 +30,28 @@ public class CourseServiceImpl implements com.danarossa.webapp2.service.CourseSe
     }
 
     @Override
-    public String edit(Course[] courses) {
+    public void edit(Course[] courses) {
         Arrays.stream(courses).forEach(courseRepository::save);
-        return "All edited";
     }
 
     @Override
-    public String editOne(Course course) {
+    public void editOne(Course course) {
         courseRepository.save(course);
-        return "Edited";
     }
 
     @Override
-    public String delete(Course[] courses) {
+    public void delete(Course[] courses) {
         Arrays.stream(courses).forEach(courseRepository::delete);
-        return "All deleted";
     }
 
     @Override
-    public String deleteOne(Course course) {
+    public void deleteOne(Course course) {
         courseRepository.save(course);
-        return "Deleted";
     }
 
     @Override
-    public Optional<Course> byId(Integer courseId) {
-        return courseRepository.findById(courseId);
+    public Course byId(Integer courseId) {
+        return courseRepository.findById(courseId).orElseThrow(() -> new ServiceException("Course not found"));
     }
 
     @Override

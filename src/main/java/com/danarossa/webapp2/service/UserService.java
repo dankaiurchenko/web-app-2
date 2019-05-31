@@ -9,7 +9,7 @@ public interface UserService {
 
     User byId(Integer userId);
 
-    String edit(User userToEdit);
+    void edit(User userToEdit);
 
-    String delete(Integer userId);
+    void delete(Integer userId);
 }

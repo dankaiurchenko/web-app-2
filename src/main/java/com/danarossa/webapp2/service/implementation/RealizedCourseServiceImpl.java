@@ -37,35 +37,35 @@ public class RealizedCourseServiceImpl implements RealizedCourseService {
 
 
     @Override
-    public Optional<RealizedCourse> byId(Integer realizedCourseId) {
-        return realizedCourseRepository.findById(realizedCourseId);
+    public RealizedCourse byId(Integer realizedCourseId) {
+        return realizedCourseRepository.findById(realizedCourseId)
+                .orElseThrow(() -> new ServiceException("Realized Course not found!"));
 
     }
 
     @Override
-    public Integer createNew(RealizedCourse realizedCourse) {
+    public RealizedCourse createNew(RealizedCourse realizedCourse) {
         realizedCourseRepository.save(realizedCourse);
-        return realizedCourse.getRealizedCourseId();
+        return realizedCourse;
 
     }
 
 
     @Override
-    public Integer edit(RealizedCourse realizedCourse) {
+    public RealizedCourse edit(RealizedCourse realizedCourse) {
         realizedCourseRepository.save(realizedCourse);
-        return realizedCourse.getRealizedCourseId();
+        return realizedCourse;
     }
 
 
     @Override
-    public String delete(Integer realizedCourseId) {
+    public void delete(Integer realizedCourseId) {
         Optional<RealizedCourse> byId = realizedCourseRepository.findById(realizedCourseId);
         if (byId.isPresent())
             realizedCourseRepository.delete(byId.get());
         else {
             throw new ServiceException("Cannot delete realized course");
         }
-        return "Course with id " + realizedCourseId + " was deleted";
     }
 
 
@@ -77,9 +77,9 @@ public class RealizedCourseServiceImpl implements RealizedCourseService {
             Optional<StudentsCourse> studentsCourseForStudentAndRealizedCourse =
                     studentsCourseRepository.findByStudentIdAndRealizedCourseId(
                             user.getUserId(), realizedCourseId);
-            DtoMark dtoMark = new DtoMark(
-                    studentsCourseForStudentAndRealizedCourse.get());
-            studentWithMarks.add(new StudentWithMark(user, dtoMark));
+            studentsCourseForStudentAndRealizedCourse.
+                    ifPresent(studentsCourse -> studentWithMarks.add(
+                            new StudentWithMark(user, new DtoMark(studentsCourse))));
         }
         return studentWithMarks;
     }

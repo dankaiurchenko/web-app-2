@@ -15,6 +15,10 @@ public class Course {
     private Integer numberOfHours;
     private Integer hoursForLectures;
     private Integer hoursForPractice;
+    @Column(name = "lecturer_id")
     private Integer lecturerId;
 
+    @ManyToOne()
+    @JoinColumn(name = "lecturer_id", insertable = false, updatable = false)
+    private User lecturer;
 }

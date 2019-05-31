@@ -19,11 +19,6 @@ import java.util.Optional;
 public class MarkController {
     @Autowired
     private StudentsCourseRepository studentsCourseRepository;
-    @Autowired
-    private RealizedCourseRepository realizedCourseRepository;
-
-    @Autowired
-    private CourseRepository courseRepository;
 
     @Autowired
     private UserRepository userRepository;

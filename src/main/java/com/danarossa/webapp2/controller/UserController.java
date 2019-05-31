@@ -26,13 +26,13 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public String edit(@RequestBody @Valid User userToEdit) {
-        return userService.edit(userToEdit);
+    public void edit(@RequestBody @Valid User userToEdit) {
+        userService.edit(userToEdit);
     }
 
     @DeleteMapping("/{userId}")
-    public String edit(@PathVariable Integer userId) {
-        return userService.delete(userId);
+    public void edit(@PathVariable Integer userId) {
+        userService.delete(userId);
     }
 
     @GetMapping("/{userId}")

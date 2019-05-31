@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/realized-courses")
@@ -24,25 +23,25 @@ public class RealizedCourseController {
 
 
     @GetMapping("/{realizedCourseId}")
-    public Optional<RealizedCourse> byId(@PathVariable Integer realizedCourseId) {
+    public RealizedCourse byId(@PathVariable Integer realizedCourseId) {
         return realizedCourseService.byId(realizedCourseId);
 
     }
 
     @PostMapping
-    public Integer createNew(@RequestBody @Valid RealizedCourse realizedCourse) {
+    public RealizedCourse createNew(@RequestBody @Valid RealizedCourse realizedCourse) {
         return realizedCourseService.createNew(realizedCourse);
 
     }
 
     @PutMapping
-    public Integer edit(@RequestBody @Valid RealizedCourse realizedCourse) {
+    public RealizedCourse edit(@RequestBody @Valid RealizedCourse realizedCourse) {
         return realizedCourseService.edit(realizedCourse);
     }
 
     @DeleteMapping("/{realizedCourseId}")
-    public String delete(@PathVariable Integer realizedCourseId) {
-        return realizedCourseService.delete(realizedCourseId);
+    public void delete(@PathVariable Integer realizedCourseId) {
+        realizedCourseService.delete(realizedCourseId);
     }
 
     @GetMapping("/{realizedCourseId}/students")

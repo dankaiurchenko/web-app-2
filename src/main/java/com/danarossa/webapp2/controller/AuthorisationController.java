@@ -67,7 +67,6 @@ public class AuthorisationController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        // Creating user's account
         User user = new User(signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getName(), signUpRequest.getSurname());

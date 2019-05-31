@@ -38,20 +38,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String edit(User userToEdit) {
+    public void edit(User userToEdit) {
         userRepository.save(userToEdit);
-        return "User saved" + userToEdit;
     }
 
 
     @Override
-    public String delete(Integer userId) {
+    public void delete(Integer userId) {
         Optional<User> byId = userRepository.findById(userId);
         if (byId.isPresent()) {
             userRepository.delete(byId.get());
         } else {
-            return "user doesnt exist";
+            throw new ServiceException("user doesnt exist");
         }
-        return "Deleted";
     }
 }

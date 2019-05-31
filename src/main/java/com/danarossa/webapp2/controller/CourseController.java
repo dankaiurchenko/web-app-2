@@ -31,27 +31,27 @@ public class CourseController {
     }
 
     @PutMapping
-    public String edit(@RequestBody @Valid Course[] courses) {
-        return courseService.edit(courses);
+    public void edit(@RequestBody @Valid Course[] courses) {
+        courseService.edit(courses);
     }
 
     @PutMapping("/{courseId}")
-    public String editOne(@RequestBody @Valid Course course) {
-        return courseService.editOne(course);
+    public void editOne(@RequestBody @Valid Course course) {
+        courseService.editOne(course);
     }
 
     @DeleteMapping
-    public String delete(@RequestBody @Valid Course[] courses) {
-        return courseService.delete(courses);
+    public void delete(@RequestBody @Valid Course[] courses) {
+        courseService.delete(courses);
     }
 
     @DeleteMapping("/{courseId}")
-    public String deleteOne(@RequestBody @Valid Course course) {
-        return courseService.deleteOne(course);
+    public void deleteOne(@RequestBody @Valid Course course) {
+        courseService.deleteOne(course);
     }
 
     @GetMapping("/{courseId}")
-    public Optional<Course> byId(@PathVariable Integer courseId) {
+    public Course byId(@PathVariable Integer courseId) {
         return courseService.byId(courseId);
     }
 
