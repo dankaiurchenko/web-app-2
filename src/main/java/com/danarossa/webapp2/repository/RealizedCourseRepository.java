@@ -3,7 +3,6 @@ package com.danarossa.webapp2.repository;
 import com.danarossa.webapp2.data.RealizedCourse;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository

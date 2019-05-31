@@ -64,7 +64,6 @@
             },
             setAuthenticated(status) {
                 this.$store.commit('authenticated', status);
-                // this.$store.state.authenticated = status;
                 console.log(this.$store.state.user);
                 console.log(this.$store.state.authenticated);
             },
@@ -75,24 +74,22 @@
                 self.$store.commit('authenticated', false);
                 self.$router.push('/login');
                 self.successAutoClosable("you are logged out on front");
-                http.post("/logout", this.$store.state.user)
-                    .then(function (response) {
-                        console.log(response.data);
-                        self.$store.commit('token', '');
-                        self.$store.commit('user', null);
-                        self.$store.commit('authenticated', false);
-                        self.$router.push('/login');
-                        self.successAutoClosable("you are logged out on back");
-                    }).catch(function (error) {
-                    console.log(error);
-                    console.log("The username and / or password is incorrect");
-                });
+                // http.post("/logout", this.$store.state.user)
+                //     .then(function (response) {
+                //         console.log(response.data);
+                //         self.$store.commit('token', '');
+                //         self.$store.commit('user', null);
+                //         self.$store.commit('authenticated', false);
+                //         self.$router.push('/login');
+                //         self.successAutoClosable("you are logged out on back");
+                //     }).catch(function (error) {
+                //     console.log(error);
+                //     console.log("The username and / or password is incorrect");
+                // });
             }
         },
         computed: {
             authenticated() {
-                // console.log(this.$store.state.user);
-                // console.log(this.$store.state.authenticated);
                 console.log(this.$store.state.user);
                 console.log(this.$store.state.authenticated);
                 return this.$store.state.authenticated;
